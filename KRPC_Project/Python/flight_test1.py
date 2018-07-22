@@ -1,13 +1,17 @@
 import krpc
+import vessel_sounder1
 
 logging = 'DEBUG'
 conn = krpc.connect()
 if logging in ('DEBUG'):
     print(conn.krpc.get_status().version)
-vessel = conn.space_center.active_vessel
+
+def start_vehicle(connection):
+    vessel = connection.space_center.active_vessel
 
 def launch():
     print('Launch!')
     vessel.control.activate_next_stage()
 
+start_vehicle(conn)
 launch()
