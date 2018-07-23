@@ -1,4 +1,5 @@
 import krpc
+import time
 # Unit Test: List rerunnable_experiments
 
 def print_list(list):
@@ -24,12 +25,19 @@ for experiment in krpc_vessel.parts.experiments:
 
 print(str(rerunnable_experiments))
 
-for part in rerunnable_experiments:
-    if part.has_data:
-        if part.data.transmit_value > 0:
+cycles = 10
+i = 0
+while i < cycles:
+    for part in rerunnable_experiments:
+        if part.has_data:
+            # info = part.science_subject <- Appears to not have constructor in krpc
+            place = part.biome
             part.transmit()
-            print("Transmitting: "+str(part.science_subject)+" on "+str(part.biome))
-        else:
+            print("Transmitting: "+str(part.data)+" from "+place)
+            #if part.data.transmit_value > 0:
             part.dump()
-    print("Running: "+str(part.science_subject))
-    part.run()
+            time.sleep(1)
+        print("Running: "+str(part))
+        part.run()
+        time.sleep(1)
+    i = i + 1
